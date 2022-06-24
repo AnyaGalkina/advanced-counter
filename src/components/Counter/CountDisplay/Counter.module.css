@@ -1,0 +1,14 @@
+.counter {
+    width: 300px;
+    height: 100px;
+    border-radius: 8px;
+    background-color: #88a0a0;
+}
+
+.error {
+    color: darkred;
+}
+
+.countNum {
+    font-size: 5rem;
+}
