@@ -61,7 +61,7 @@ function App() {
 
     return (
         <div className="App">
-            {isSettingsActive  ?
+            {/*{isSettingsActive  ?*/}
             <Settings
                 maxCountValue={maxCountValue}
                 startCountValue={startCountValue}
@@ -72,7 +72,7 @@ function App() {
                 setError={setError}
                 setIsSettingsActive={setIsSettingsActive}
             />
-            :
+            {/*:*/}
             <Counter
                 count={count}
                 maxCountValue={maxCountValue}
@@ -83,7 +83,7 @@ function App() {
                 clearCount={clearCount}
                 setIsSettingsActive={setIsSettingsActive}
                 />
-            }
+            {/*}*/}
         </div>
     );
 }

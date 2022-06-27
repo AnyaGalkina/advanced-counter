@@ -39,11 +39,11 @@ const Counter: React.FC<PropsType> = ({
                     disabled={isResetActive} title={"reset"}
                     callback={clearCount}
                 />
-                 <Button
-                    title={"set"}
-                    callback={onClickHandler}
-                    disabled={false}
-                />
+                {/* <Button*/}
+                {/*    title={"set"}*/}
+                {/*    callback={onClickHandler}*/}
+                {/*    disabled={false}*/}
+                {/*/>*/}
             </div>
         </div>
     );
