@@ -28,7 +28,7 @@ const InputTypeNumber: React.FC<PropsType> = ({
         setCount("enter value and press 'set'");
 
         if (newValue < limitMinValue || limitMaxValue && newValue >= limitMaxValue) {
-            setCount("invalid value!");
+            // setCount("invalid value!");
             setError(true);
         } else {
             setError(false);
@@ -43,6 +43,7 @@ const InputTypeNumber: React.FC<PropsType> = ({
                 value={value}
                 type={"number"}
                 onChange={onChangeHandler}
+                // min={0}
             />
         </div>
     );

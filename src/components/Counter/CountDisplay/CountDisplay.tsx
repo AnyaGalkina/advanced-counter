@@ -19,7 +19,8 @@ const CountDisplay: React.FC<PropsType> = ({
 
     return (
         <div className={addStyle}>
-            {count}
+            {error ?  "invalid value!" : count}
+            {/*{count}*/}
         </div>
     );
 }

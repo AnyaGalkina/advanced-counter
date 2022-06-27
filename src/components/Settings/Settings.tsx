@@ -36,6 +36,10 @@ const Settings: React.FC<PropsType> = ({
 
 
     const onClickHandler = () => {
+        if(minValue < 0) {
+            setError(true);
+            return undefined;
+        }
         setMaxCountValue(maxValue);
         setStartCountValue(minValue);
         setCount(minValue);
@@ -45,7 +49,9 @@ const Settings: React.FC<PropsType> = ({
     const isMaxEqual = maxValue === maxCountValue;
     const isMinEqual = minValue === startCountValue;
 
-    const isDisabled = isMaxEqual && isMinEqual || error;
+    const isDisabled = isMaxEqual && isMinEqual || error
+        // || minValue < 0
+    ;
 
     return (
         <div className="wrapper">
