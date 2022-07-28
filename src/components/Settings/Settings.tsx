@@ -8,16 +8,19 @@ type PropsType = {
     startCountValue: number;
     setMaxCountValue: (maxValue: number) => void;
     setStartCountValue: (startValue: number) => void;
-    setCount: (value: string | number) => void;
+    setCount: (value: number) => void;
     error: boolean;
     setError: (error: boolean) => void;
-    setIsSettingsActive: (isSettingsActive: boolean) => void
+    // setIsSettingsActive: (isSettingsActive: boolean) => void;
+    setSettingMode:(settingMode: boolean) => void
+
 }
 
 const Settings: React.FC<PropsType> = ({
                                            maxCountValue, setMaxCountValue, setStartCountValue,
                                            startCountValue, setCount, error, setError,
-                                           setIsSettingsActive
+                                           // setIsSettingsActive,
+                                           setSettingMode
                                        }) => {
 
     const [maxValue, setMax] = useState(maxCountValue);
@@ -43,15 +46,11 @@ const Settings: React.FC<PropsType> = ({
         setMaxCountValue(maxValue);
         setStartCountValue(minValue);
         setCount(minValue);
-        setIsSettingsActive(false);
+        setSettingMode(false);
+        // setIsSettingsActive(false);
     }
 
-    const isMaxEqual = maxValue === maxCountValue;
-    const isMinEqual = minValue === startCountValue;
-
-    const isDisabled = isMaxEqual && isMinEqual || error
-        // || minValue < 0
-    ;
+    const isDisabled = minValue < 0 || maxValue <= minValue || error;
 
     return (
         <div className="wrapper">
@@ -64,6 +63,9 @@ const Settings: React.FC<PropsType> = ({
                     limitMinValue={minValue}
                     error={error}
                     setError={setError}
+                    setSettingMode={setSettingMode}
+                    currentMinValue={minValue}
+
                 />
                 <InputTypeNumber
                     title={"min value"}
@@ -74,6 +76,8 @@ const Settings: React.FC<PropsType> = ({
                     limitMaxValue={maxValue}
                     error={error}
                     setError={setError}
+                    setSettingMode={setSettingMode}
+                    currentMinValue={minValue}
                 />
             </div>
             <div>

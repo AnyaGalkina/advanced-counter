@@ -10,18 +10,20 @@ type PropsType = {
     isResetActive: boolean;
     incrementCount: () => void;
     clearCount: () => void;
-    setIsSettingsActive: (isSettingsActive: boolean) => void
+    settingMode: boolean;
+    // setIsSettingsActive: (isSettingsActive: boolean) => void
 }
 
 const Counter: React.FC<PropsType> = ({
                                           count, maxCountValue, error,
                                           isIncActive, isResetActive, incrementCount, clearCount,
-                                          setIsSettingsActive
+                                          // setIsSettingsActive
+                                          settingMode
                                       }) => {
 
-    const onClickHandler = () => {
-        setIsSettingsActive(true)
-    }
+    // const onClickHandler = () => {
+    //     setIsSettingsActive(true)
+    // }
 
     return (
         <div className="wrapper">
@@ -29,6 +31,7 @@ const Counter: React.FC<PropsType> = ({
                 count={count}
                 maxCountValue={maxCountValue}
                 error={error}
+                settingMode={settingMode}
             />
             <div>
                 <Button

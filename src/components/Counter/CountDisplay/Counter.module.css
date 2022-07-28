@@ -12,3 +12,8 @@
 .countNum {
     font-size: 5rem;
 }
+
+.countNumRed {
+    font-size: 5rem;
+    color: darkred;
+}

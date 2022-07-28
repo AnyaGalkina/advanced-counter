@@ -17,9 +17,10 @@ function App() {
 
     const [startCountValue, setStartCountValue] = useState(initStartValue);
     const [maxCountValue, setMaxCountValue] = useState(initMaxValue);
-    const [count, setCount] = useState<string | number>(startCountValue);
+    const [count, setCount] = useState<number>(startCountValue);
+    const [settingMode, setSettingMode] = useState(false);
     const [error, setError] = useState(false);
-    const [isSettingsActive, setIsSettingsActive] =useState(false);
+    // const [isSettingsActive, setIsSettingsActive] =useState(false);
 
     useEffect(() => {
 
@@ -48,16 +49,15 @@ function App() {
     }, [startCountValue]);
 
     const incrementCount = () => {
-        typeof (count) === "number" &&
-        setCount(count + 1);
+        setCount(count + 1)
     }
 
     const clearCount = () => {
         setCount(startCountValue);
     }
 
-    const isIncActive = typeof (count) === "string" ? true : count === maxCountValue;
-    const isResetActive = typeof (count) === "string" ? true : count === startCountValue;
+    const isIncActive = settingMode || count === maxCountValue;
+    const isResetActive = settingMode || count === startCountValue;
 
     return (
         <div className="App">
@@ -70,7 +70,8 @@ function App() {
                 setCount={setCount}
                 error={error}
                 setError={setError}
-                setIsSettingsActive={setIsSettingsActive}
+                setSettingMode={setSettingMode}
+                // setIsSettingsActive={setIsSettingsActive}
             />
             {/*:*/}
             <Counter
@@ -81,7 +82,8 @@ function App() {
                 isResetActive={isResetActive}
                 incrementCount={incrementCount}
                 clearCount={clearCount}
-                setIsSettingsActive={setIsSettingsActive}
+                settingMode={settingMode}
+                // setIsSettingsActive={setIsSettingsActive}
                 />
             {/*}*/}
         </div>

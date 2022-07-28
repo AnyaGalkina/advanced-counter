@@ -4,23 +4,21 @@ import styles from "./Counter.module.css";
 type PropsType = {
     count: number | string;
     maxCountValue: number;
-    error: boolean
+    error: boolean;
+    settingMode: boolean;
 }
 
 const CountDisplay: React.FC<PropsType> = ({
-                                               count, error, maxCountValue
+                                               count, error, maxCountValue, settingMode
                                            }) => {
-
-    const styleIsNumber = `${styles.counter} ${styles.countNum} ${count === maxCountValue && styles.error}`;
-    const styleIsString = `${styles.counter} ${error && styles.error}`;
-    const countIsNumber = typeof (count) === "number";
-
-    const addStyle = countIsNumber ? styleIsNumber : styleIsString
+    const numStyles = `${count===maxCountValue ? styles.countNumRed : styles.countNum}`
+    const displayCounterStyle = `${error ? styles.error : settingMode ? "" : numStyles}`;
 
     return (
-        <div className={addStyle}>
-            {error ?  "invalid value!" : count}
-            {/*{count}*/}
+        <div className={styles.counter}>
+            <span className={displayCounterStyle}>
+                            {error ? "invalid value!" : settingMode ? "enter value and press 'set'" : count}
+            </span>
         </div>
     );
 }

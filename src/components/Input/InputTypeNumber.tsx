@@ -7,14 +7,16 @@ type PropsType = {
     limitMinValue: number;
     limitMaxValue?: number;
     onChangeCallback: (value: number) => void;
-    setCount: (value: string | number) => void;
+    setCount: (value: number) => void;
     setError: (error: boolean) => void;
     error: boolean;
+    currentMinValue: number;
+    setSettingMode:(settingMode: boolean) => void
 }
 
 const InputTypeNumber: React.FC<PropsType> = ({
                                               title, value, limitMaxValue, limitMinValue,
-                                              error, setError, setCount, onChangeCallback
+                                              error, setError,  onChangeCallback, setSettingMode, currentMinValue
                                           }) => {
 
 
@@ -25,7 +27,7 @@ const InputTypeNumber: React.FC<PropsType> = ({
         let newValue = JSON.parse(event.currentTarget.value);
 
         onChangeCallback(newValue);
-        setCount("enter value and press 'set'");
+        setSettingMode(true)
 
         if ( currentMinValue < 0 || newValue <= limitMinValue || limitMaxValue && newValue >= limitMaxValue) {
             setError(true);
