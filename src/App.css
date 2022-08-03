@@ -6,10 +6,31 @@
     /*background-color: darkslategray;*/
     /*background-color: #071323;*/
     background-color: #036275;
-    align-items:center;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     height: 100vh;
+}
 
+.toggle {
+    margin-bottom: 100px;
+    color: #88a0a0;
+    font-size: 1.5rem;
+}
+
+.checkbox {
+    margin-left: 15px;
+    width: 20px;
+    height: 20px;
+}
+
+.checkbox:checked {
+    background-color: darkred;
+}
+
+.main {
+    display: flex;
+    align-content: space-around;
 }
 
 .wrapper {

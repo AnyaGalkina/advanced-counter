@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import Settings from "./components/Settings/Settings";
 import Counter from "./components/Counter/Counter";
-import './App.css';
-
+import "./App.css";
+import {useDispatch, useSelector} from "react-redux";
+import {setCount, setMaxCountValue, setStartCountValue, setToggleActive} from "./redux/counter-reducer";
+import {AppStateType} from "./redux/store";
 
 export const KEYSLOCALSTORAGE = {
     COUNT: "count-value",
@@ -10,82 +12,72 @@ export const KEYSLOCALSTORAGE = {
     START: "start-count-value"
 }
 
-let initStartValue = 0;
-let initMaxValue = 5;
-
 function App() {
+    const isToggleActive = useSelector<AppStateType, boolean>(state => state.counterState.isToggleActive);
+    const isCounterModeActive = useSelector<AppStateType, boolean>(state => state.counterState.isCounterModeActive);
+    const count = useSelector<AppStateType, number>(state => state.counterState.count);
+    const dispatch = useDispatch();
 
-    const [startCountValue, setStartCountValue] = useState(initStartValue);
-    const [maxCountValue, setMaxCountValue] = useState(initMaxValue);
-    const [count, setCount] = useState<number>(startCountValue);
-    const [settingMode, setSettingMode] = useState(false);
-    const [error, setError] = useState(false);
-    // const [isSettingsActive, setIsSettingsActive] =useState(false);
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     let countValue = localStorage.getItem(KEYSLOCALSTORAGE.COUNT);
+    //     countValue && dispatch(setCount(JSON.parse(countValue)));
+    // }, []);
+    //
+    // // works
+    // useEffect(() => {
+    //     localStorage.setItem(KEYSLOCALSTORAGE.COUNT, JSON.stringify(count));
+    // }, [count]);
 
-        let countValue = localStorage.getItem(KEYSLOCALSTORAGE.COUNT);
-        let startValue = localStorage.getItem(KEYSLOCALSTORAGE.START);
-        let maxValue = localStorage.getItem(KEYSLOCALSTORAGE.MAX);
+    // useEffect(() => {
+    //
+    //     let countValue = localStorage.getItem(KEYSLOCALSTORAGE.COUNT);
+    //     // let startValue = localStorage.getItem(KEYSLOCALSTORAGE.START);
+    //     // let maxValue = localStorage.getItem(KEYSLOCALSTORAGE.MAX);
+    //
+    //     countValue && dispatch(setCount(JSON.parse(countValue)));
+    //
+    //     // countValue && setCount(JSON.parse(countValue));
+    //     // startValue && setStartCountValue(JSON.parse(startValue));
+    //     // maxValue && setMaxCountValue(JSON.parse(maxValue));
+    //
+    // }, []);
 
-        countValue && setCount(JSON.parse(countValue));
-        startValue && setStartCountValue(JSON.parse(startValue));
-        maxValue && setMaxCountValue(JSON.parse(maxValue));
-
-    }, []);
-
-    useEffect(() => {
-        if (typeof (count) === "number") {
-            localStorage.setItem(KEYSLOCALSTORAGE.COUNT, JSON.stringify(count));
-        }
-    }, [count]);
-
-    useEffect(() => {
-        localStorage.setItem(KEYSLOCALSTORAGE.MAX, JSON.stringify(maxCountValue));
-    }, [maxCountValue]);
-
-    useEffect(() => {
-        localStorage.setItem(KEYSLOCALSTORAGE.START, JSON.stringify(startCountValue));
-    }, [startCountValue]);
-
-    const incrementCount = () => {
-        setCount(count + 1)
-    }
-
-    const clearCount = () => {
-        setCount(startCountValue);
-    }
-
-    const isIncActive = settingMode || count === maxCountValue;
-    const isResetActive = settingMode || count === startCountValue;
+    // useEffect(() => {
+    //     localStorage.setItem(KEYSLOCALSTORAGE.MAX, JSON.stringify(maxCountValue));
+    // }, [maxCountValue]);
+    //
+    // useEffect(() => {
+    //     localStorage.setItem(KEYSLOCALSTORAGE.START, JSON.stringify(startCountValue));
+    // }, [startCountValue]);
 
     return (
         <div className="App">
-            {/*{isSettingsActive  ?*/}
-            <Settings
-                maxCountValue={maxCountValue}
-                startCountValue={startCountValue}
-                setMaxCountValue={setMaxCountValue}
-                setStartCountValue={setStartCountValue}
-                setCount={setCount}
-                error={error}
-                setError={setError}
-                setSettingMode={setSettingMode}
-                // setIsSettingsActive={setIsSettingsActive}
-            />
-            {/*:*/}
-            <Counter
-                count={count}
-                maxCountValue={maxCountValue}
-                error={error}
-                isIncActive={isIncActive}
-                isResetActive={isResetActive}
-                incrementCount={incrementCount}
-                clearCount={clearCount}
-                settingMode={settingMode}
-                // setIsSettingsActive={setIsSettingsActive}
+            <div className={"toggle"}>
+                <span>switch counter mode</span>
+                <input
+                    className={"checkbox"}
+                    type={"checkbox"}
+                    checked={isToggleActive}
+                    onClick={() => {
+                        dispatch(setToggleActive(!isToggleActive))
+                    }}
                 />
-            {/*}*/}
+            </div>
+            <div className="main">
+                {isToggleActive ?
+
+                    isCounterModeActive
+                        ? <Counter isToggleActive={isToggleActive}/>
+                        : <Settings isCounterModeActive={isCounterModeActive}/>
+                    :
+                    <>
+                        <Settings/>
+                        <Counter/>
+                    </>
+                }
+
+            </div>
         </div>
     );
 }

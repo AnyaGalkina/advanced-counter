@@ -1,36 +1,43 @@
 import React from "react";
 import CountDisplay from "./CountDisplay/CountDisplay";
 import Button from "../Button/Button";
+import {AppStateType} from "../../redux/store";
+import {useDispatch, useSelector} from "react-redux";
+import {setCount, setCounterModeActive} from "../../redux/counter-reducer";
 
 type PropsType = {
-    count: number | string;
-    maxCountValue: number;
-    error: boolean;
-    isIncActive: boolean;
-    isResetActive: boolean;
-    incrementCount: () => void;
-    clearCount: () => void;
-    settingMode: boolean;
-    // setIsSettingsActive: (isSettingsActive: boolean) => void
+    isToggleActive?: boolean
 }
 
-const Counter: React.FC<PropsType> = ({
-                                          count, maxCountValue, error,
-                                          isIncActive, isResetActive, incrementCount, clearCount,
-                                          // setIsSettingsActive
-                                          settingMode
-                                      }) => {
+const Counter: React.FC<PropsType> = ({isToggleActive}) => {
 
-    // const onClickHandler = () => {
-    //     setIsSettingsActive(true)
-    // }
+    const settingMode = useSelector<AppStateType, boolean>(state => state.counterState.settingMode);
+    const maxCountValue = useSelector<AppStateType, number>(state => state.counterState.maxCountValue);
+    const startCountValue = useSelector<AppStateType, number>(state => state.counterState.startCountValue);
+    const count = useSelector<AppStateType, number>(state => state.counterState.count);
+    const dispatch = useDispatch();
+
+    const isIncActive = settingMode || count === maxCountValue;
+    const isResetActive = settingMode || count === startCountValue;
+
+    const incrementCount = () => {
+        dispatch(setCount(count + 1));
+    }
+
+    const clearCount = () => {
+        dispatch(setCount(startCountValue));
+    }
+
+    const onSettingsClickHandler = () => {
+        dispatch(setCounterModeActive(false));
+    }
+
 
     return (
         <div className="wrapper">
             <CountDisplay
                 count={count}
                 maxCountValue={maxCountValue}
-                error={error}
                 settingMode={settingMode}
             />
             <div>
@@ -42,11 +49,13 @@ const Counter: React.FC<PropsType> = ({
                     disabled={isResetActive} title={"reset"}
                     callback={clearCount}
                 />
-                {/* <Button*/}
-                {/*    title={"set"}*/}
-                {/*    callback={onClickHandler}*/}
-                {/*    disabled={false}*/}
-                {/*/>*/}
+                {isToggleActive &&
+                    <Button
+                        title={"settings"}
+                        callback={onSettingsClickHandler}
+                        disabled={false}
+                    />
+                }
             </div>
         </div>
     );
