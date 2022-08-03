@@ -1,16 +1,18 @@
 import React from "react";
 import styles from "./Counter.module.css";
+import {useSelector} from "react-redux";
+import {AppStateType} from "../../../redux/store";
 
 type PropsType = {
-    count: number | string;
+    count: number;
     maxCountValue: number;
-    error: boolean;
     settingMode: boolean;
 }
 
-const CountDisplay: React.FC<PropsType> = ({
-                                               count, error, maxCountValue, settingMode
-                                           }) => {
+const CountDisplay: React.FC<PropsType> = ({count, maxCountValue, settingMode}) => {
+
+    const error = useSelector<AppStateType, boolean>(state => state.counterState.error);
+
     const numStyles = `${count===maxCountValue ? styles.countNumRed : styles.countNum}`
     const displayCounterStyle = `${error ? styles.error : settingMode ? "" : numStyles}`;
 

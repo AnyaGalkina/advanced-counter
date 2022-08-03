@@ -1,40 +1,54 @@
 import React, {ChangeEvent} from "react";
 import styles from "./InputTypeNumber.module.css";
+import {useDispatch} from "react-redux";
+import {setError, setSettingMode} from "../../redux/counter-reducer";
 
 type PropsType = {
     title: string;
     value: number;
-    limitMinValue: number;
-    limitMaxValue?: number;
+    isSetDisabled: boolean;
     onChangeCallback: (value: number) => void;
-    setCount: (value: number) => void;
-    setError: (error: boolean) => void;
     error: boolean;
-    currentMinValue: number;
-    setSettingMode:(settingMode: boolean) => void
+    maxValue: number;
+    minValue: number;
 }
 
 const InputTypeNumber: React.FC<PropsType> = ({
-                                              title, value, limitMaxValue, limitMinValue,
-                                              error, setError,  onChangeCallback, setSettingMode, currentMinValue
-                                          }) => {
+                                                  title, value, onChangeCallback,
+                                                  error,
+                                                  // minValue, maxValue
+                                                  isSetDisabled
+                                              }) => {
 
 
-    const inputStyle = `${styles.input} ${error && styles.error}`;
+    const dispatch = useDispatch();
 
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
 
-        let newValue = JSON.parse(event.currentTarget.value);
-
+        let newValue = +event.currentTarget.value;
         onChangeCallback(newValue);
-        setSettingMode(true)
+        dispatch(setSettingMode(true))
 
-        if ( currentMinValue < 0 || newValue <= limitMinValue || limitMaxValue && newValue >= limitMaxValue) {
-            setError(true);
+
+        // let isMinValueValid = minValue < 0;
+        // let isValuesValid = maxValue && maxValue <= minValue;
+        // if (isValuesValid || isMinValueValid){
+        //             dispatch(setError(true));
+        //         } else {
+        //             dispatch(setError(false));
+        //         }
+
+
+        //!!!!!!!BIG QUESTION setState in conditions. Need Formik or there are other options??? error setting with delay,uncorrect UI rerander in counter
+
+        if (isSetDisabled) {
+            dispatch(setError(true));
         } else {
-            setError(false);
+            dispatch(setError(false));
         }
     }
+
+    const inputStyle = `${styles.input} ${isSetDisabled && styles.error}`;
 
     return (
         <div>
@@ -44,6 +58,7 @@ const InputTypeNumber: React.FC<PropsType> = ({
                 value={value}
                 type={"number"}
                 onChange={onChangeHandler}
+                // min={0}
             />
         </div>
     );
