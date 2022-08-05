@@ -6,11 +6,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {setCount, setMaxCountValue, setStartCountValue, setToggleActive} from "./redux/counter-reducer";
 import {AppStateType} from "./redux/store";
 
-export const KEYSLOCALSTORAGE = {
-    COUNT: "count-value",
-    MAX: "max-count-value",
-    START: "start-count-value"
-}
+// export const KEYSLOCALSTORAGE = {
+//     COUNT: "count-value",
+//     MAX: "max-count-value",
+//     START: "start-count-value"
+// }
 
 function App() {
     const isToggleActive = useSelector<AppStateType, boolean>(state => state.counterState.isToggleActive);

@@ -8,15 +8,10 @@ type PropsType = {
     value: number;
     isSetDisabled: boolean;
     onChangeCallback: (value: number) => void;
-    error: boolean;
-    maxValue: number;
-    minValue: number;
 }
 
 const InputTypeNumber: React.FC<PropsType> = ({
                                                   title, value, onChangeCallback,
-                                                  error,
-                                                  // minValue, maxValue
                                                   isSetDisabled
                                               }) => {
 
@@ -29,24 +24,8 @@ const InputTypeNumber: React.FC<PropsType> = ({
         onChangeCallback(newValue);
         dispatch(setSettingMode(true))
 
-
-        // let isMinValueValid = minValue < 0;
-        // let isValuesValid = maxValue && maxValue <= minValue;
-        // if (isValuesValid || isMinValueValid){
-        //             dispatch(setError(true));
-        //         } else {
-        //             dispatch(setError(false));
-        //         }
-
-
-        //!!!!!!!BIG QUESTION setState in conditions. Need Formik or there are other options??? error setting with delay,uncorrect UI rerander in counter
-
-        if (isSetDisabled) {
-            dispatch(setError(true));
-        } else {
-            dispatch(setError(false));
-        }
     }
+
 
     const inputStyle = `${styles.input} ${isSetDisabled && styles.error}`;
 
@@ -58,7 +37,6 @@ const InputTypeNumber: React.FC<PropsType> = ({
                 value={value}
                 type={"number"}
                 onChange={onChangeHandler}
-                // min={0}
             />
         </div>
     );
