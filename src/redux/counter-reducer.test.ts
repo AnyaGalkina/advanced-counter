@@ -5,7 +5,7 @@ import {
     setError,
     setMaxCountValue,
     setSettingMode,
-    setStartCountValue, setToggleActive
+    setStartCountValue,
 } from "./counter-reducer";
 
 let initState: InitStateType;
@@ -17,7 +17,6 @@ beforeEach(() => {
         count: 0,
         settingMode: false,
         error: false,
-        isToggleActive: false,
         isCounterModeActive: true,
     };
 })
@@ -67,10 +66,4 @@ test("isCounterModeActive should be changed to false", () => {
     expect(initState.isCounterModeActive).toBeTruthy();
 })
 
-test("isToggleActive should be changed to true", () => {
-    let newState = counterReducer(initState, setToggleActive(true));
-
-    expect(newState.isToggleActive).toBeTruthy();
-    expect(initState.isToggleActive).toBeFalsy();
-})
 

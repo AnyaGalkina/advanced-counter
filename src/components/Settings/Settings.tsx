@@ -1,22 +1,13 @@
 import React, {useEffect, useState} from "react";
 import Button from "../Button/Button";
 import InputTypeNumber from "../Input/InputTypeNumber";
-// import {KEYSLOCALSTORAGE} from "../../App";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
-import {
-    setCount,
-    setCounterModeActive, setError,
-    setMaxCountValue,
-    setSettingMode,
-    setStartCountValue
-} from "../../redux/counter-reducer";
+import {setError, setValues} from "../../redux/counter-reducer";
 
-type PropsType = {
-    isCounterModeActive?: boolean
-}
+type PropsType = {}
 
-const Settings: React.FC<PropsType> = ({isCounterModeActive}) => {
+const Settings: React.FC<PropsType> = () => {
 
     const maxCountValue = useSelector<AppStateType, number>(state => state.counterState.maxCountValue);
     const startCountValue = useSelector<AppStateType, number>(state => state.counterState.startCountValue);
@@ -26,7 +17,6 @@ const Settings: React.FC<PropsType> = ({isCounterModeActive}) => {
     const [minValue, setMin] = useState(startCountValue);
 
     const isSetDisabled = minValue < 0 || maxValue <= minValue
-
 
     useEffect(() => {
         if(isSetDisabled) {
@@ -48,12 +38,8 @@ const Settings: React.FC<PropsType> = ({isCounterModeActive}) => {
     //     }
     // }, []);
 
-    const onClickHandler = () => {
-        dispatch(setMaxCountValue(maxValue));
-        dispatch(setStartCountValue(minValue));
-        dispatch(setCount(minValue));
-        dispatch(setSettingMode(false));
-        dispatch(setCounterModeActive(true));
+    const onSetClickHandler = () => {
+        dispatch(setValues(minValue, maxValue))
     }
 
     return (
@@ -73,7 +59,7 @@ const Settings: React.FC<PropsType> = ({isCounterModeActive}) => {
                 />
             </div>
             <div>
-                <Button title={"set"} callback={onClickHandler}
+                <Button title={"set"} callback={onSetClickHandler}
                     disabled={isSetDisabled}
                 />
             </div>

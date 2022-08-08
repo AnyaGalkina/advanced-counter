@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from "react";
 import styles from "./InputTypeNumber.module.css";
 import {useDispatch} from "react-redux";
-import {setError, setSettingMode} from "../../redux/counter-reducer";
+import { setSettingMode} from "../../redux/counter-reducer";
 
 type PropsType = {
     title: string;
@@ -11,10 +11,8 @@ type PropsType = {
 }
 
 const InputTypeNumber: React.FC<PropsType> = ({
-                                                  title, value, onChangeCallback,
-                                                  isSetDisabled
+                                                  title, value, onChangeCallback, isSetDisabled
                                               }) => {
-
 
     const dispatch = useDispatch();
 
@@ -23,9 +21,7 @@ const InputTypeNumber: React.FC<PropsType> = ({
         let newValue = +event.currentTarget.value;
         onChangeCallback(newValue);
         dispatch(setSettingMode(true))
-
     }
-
 
     const inputStyle = `${styles.input} ${isSetDisabled && styles.error}`;
 
