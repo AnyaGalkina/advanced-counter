@@ -6,15 +6,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {setCount, setCounterModeActive} from "../../redux/counter-reducer";
 
 type PropsType = {
-    isToggleActive?: boolean
+    switchCounterView?: boolean
 }
 
-const Counter: React.FC<PropsType> = ({isToggleActive}) => {
+const Counter: React.FC<PropsType> = ({switchCounterView}) => {
 
-    const settingMode = useSelector<AppStateType, boolean>(state => state.counterState.settingMode);
-    const maxCountValue = useSelector<AppStateType, number>(state => state.counterState.maxCountValue);
-    const startCountValue = useSelector<AppStateType, number>(state => state.counterState.startCountValue);
-    const count = useSelector<AppStateType, number>(state => state.counterState.count);
+    const {settingMode, maxCountValue, startCountValue, count}= useSelector<AppStateType, any>(state => state.counterState);
     const dispatch = useDispatch();
 
     const isIncActive = settingMode || count === maxCountValue;
@@ -32,7 +29,6 @@ const Counter: React.FC<PropsType> = ({isToggleActive}) => {
         dispatch(setCounterModeActive(false));
     }
 
-
     return (
         <div className="wrapper">
             <CountDisplay
@@ -49,7 +45,7 @@ const Counter: React.FC<PropsType> = ({isToggleActive}) => {
                     disabled={isResetActive} title={"reset"}
                     callback={clearCount}
                 />
-                {isToggleActive &&
+                {switchCounterView &&
                     <Button
                         title={"settings"}
                         callback={onSettingsClickHandler}
