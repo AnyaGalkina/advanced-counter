@@ -3,8 +3,9 @@ import Settings from "./components/Settings/Settings";
 import Counter from "./components/Counter/Counter";
 import "./App.css";
 import {useDispatch, useSelector} from "react-redux";
-import {setCount, setMaxCountValue, setStartCountValue, setToggleActive} from "./redux/counter-reducer";
+import {setCount, setMaxCountValue, setStartCountValue,} from "./redux/counter-reducer";
 import {AppStateType} from "./redux/store";
+import CheckboxInput from "./components/CheckboxInput/CheckboxInput";
 
 // export const KEYSLOCALSTORAGE = {
 //     COUNT: "count-value",
@@ -13,11 +14,9 @@ import {AppStateType} from "./redux/store";
 // }
 
 function App() {
-    const isToggleActive = useSelector<AppStateType, boolean>(state => state.counterState.isToggleActive);
+    const switchCounterView = useSelector<AppStateType, boolean>(state => state.toggleState.switchCounterView);
     const isCounterModeActive = useSelector<AppStateType, boolean>(state => state.counterState.isCounterModeActive);
-    const count = useSelector<AppStateType, number>(state => state.counterState.count);
     const dispatch = useDispatch();
-
 
     // useEffect(() => {
     //     let countValue = localStorage.getItem(KEYSLOCALSTORAGE.COUNT);
@@ -53,30 +52,18 @@ function App() {
 
     return (
         <div className="App">
-            <div className={"toggle"}>
-                <span>switch counter mode</span>
-                <input
-                    className={"checkbox"}
-                    type={"checkbox"}
-                    checked={isToggleActive}
-                    onClick={() => {
-                        dispatch(setToggleActive(!isToggleActive))
-                    }}
-                />
-            </div>
+            <CheckboxInput  switchCounterView={switchCounterView}/>
             <div className="main">
-                {isToggleActive ?
-
-                    isCounterModeActive
-                        ? <Counter isToggleActive={isToggleActive}/>
-                        : <Settings isCounterModeActive={isCounterModeActive}/>
+                {switchCounterView
+                    ? isCounterModeActive
+                        ? <Counter switchCounterView={switchCounterView}/>
+                        : <Settings/>
                     :
                     <>
                         <Settings/>
                         <Counter/>
                     </>
                 }
-
             </div>
         </div>
     );
