@@ -6,17 +6,18 @@ import {useDispatch, useSelector} from "react-redux";
 import {setCount, setMaxCountValue, setStartCountValue,} from "./redux/counter-reducer";
 import {AppStateType} from "./redux/store";
 import CheckboxInput from "./components/CheckboxInput/CheckboxInput";
+import {loadState} from "./utils/local-storage";
 
-// export const KEYSLOCALSTORAGE = {
-//     COUNT: "count-value",
-//     MAX: "max-count-value",
-//     START: "start-count-value"
-// }
+
+
 
 function App() {
     const switchCounterView = useSelector<AppStateType, boolean>(state => state.toggleState.switchCounterView);
     const isCounterModeActive = useSelector<AppStateType, boolean>(state => state.counterState.isCounterModeActive);
     const dispatch = useDispatch();
+    const state = useSelector(state => state)
+    console.log(state)
+    console.log("loadState()", loadState());
 
     // useEffect(() => {
     //     let countValue = localStorage.getItem(KEYSLOCALSTORAGE.COUNT);
@@ -52,7 +53,7 @@ function App() {
 
     return (
         <div className="App">
-            <CheckboxInput  switchCounterView={switchCounterView}/>
+            <CheckboxInput switchCounterView={switchCounterView}/>
             <div className="main">
                 {switchCounterView
                     ? isCounterModeActive

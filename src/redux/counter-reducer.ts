@@ -24,6 +24,10 @@ let initState = {
 export const counterReducer = (state: InitStateType = initState, action: ActionType): InitStateType => {
     switch (action.type) {
         case SET_COUNT:
+        {
+            console.log("set count")
+            return {...state, ...action.payload};
+        }
         case SET_MAX_VALUE:
         case SET_START_VALUE:
         case SET_ERROR:
